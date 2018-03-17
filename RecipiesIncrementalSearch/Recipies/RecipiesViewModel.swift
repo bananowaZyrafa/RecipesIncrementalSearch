@@ -20,7 +20,10 @@ class RecipiesViewModel: NSObject, RecipiesViewModelType {
 
     //MARK: Network requests
     func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]> {
-        return apiClient.fetchGeneralRecipies(for: searchQuery)
+        guard searchQuery.count > 0 else {
+            return .just([])
+        }
+        return apiClient.fetchGeneralRecipies(for: searchQuery).catchErrorJustReturn([])
     }
     
     
@@ -37,7 +40,6 @@ extension RecipiesViewModel {
         }
         let currentRecipe = recipies[indexPath.row]
         apiClient.fetchImage(for: currentRecipe.imageURL)
-            .debug()
             .asDriver(onErrorJustReturn: UIImage.godtPlaceholder)
             .drive(onNext: { (fetchedImage) in
                 cell.configure(with: fetchedImage)

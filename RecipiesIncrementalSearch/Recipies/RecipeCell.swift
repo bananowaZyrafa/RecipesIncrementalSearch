@@ -21,6 +21,7 @@ class RecipeCell: UITableViewCell {
     
     func configure(with recipe: RecipeGeneral) {
         recipeTitle.text = recipe.title
+        recipeTitle.sizeToFit()
     }
     
     func configure(with image: UIImage) {

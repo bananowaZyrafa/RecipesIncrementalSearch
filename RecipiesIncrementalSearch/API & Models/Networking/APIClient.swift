@@ -36,7 +36,9 @@ class APIClient: APIClientType {
     
     
     func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]> {
-        let params = ["query" : searchQuery]
+        let params = ["query" : searchQuery,
+                    "limit" : "50"
+                    ]
         return fetchData(urlString: EndpointURL.search, params: params)
             .flatMap{ [weak self] data -> Observable<SearchResponseModel> in
                 return self?.parseObservable(data: data) ?? .just(SearchResponseModel.emptyResponse)

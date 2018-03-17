@@ -35,7 +35,14 @@ class RecipiesViewController: UIViewController {
     }
     
     func bindViewModel() {
-        viewModel.fetchGeneralRecipies(for: "cake")
+        searchBar.rx.text
+            .orEmpty
+            .skip(1)
+            .debounce(0.5, scheduler: ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
+            .do(onNext: {[weak self] (title) in
+                self?.startActivityIndicator()
+            })
+            .flatMapLatest(viewModel.fetchGeneralRecipies)
             .catchError({ (error) -> Observable<[RecipeGeneral]> in
                 print(error)
                 return Observable.just([])
@@ -43,9 +50,12 @@ class RecipiesViewController: UIViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(onNext: {[weak self] fetchedRecipies in
                 self?.render(recipies: fetchedRecipies)
+                self?.stopActivityIndicator()
             })
             .disposed(by: disposeBag)
+        
     }
+    
     
     private func render(recipies: [RecipeGeneral]) {
         viewModel.recipies = recipies
@@ -76,6 +86,19 @@ extension PrepareView {
     private func embedSearchOverTableView() {
         searchBar.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
         stackView.insertArrangedSubview(searchBar, at: 0)
+    }
+}
+
+extension RecipiesViewController {
+    func startActivityIndicator() {
+        DispatchQueue.main.async {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        }
+    }
+    func stopActivityIndicator() {
+        DispatchQueue.main.async {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
     }
 }
 
