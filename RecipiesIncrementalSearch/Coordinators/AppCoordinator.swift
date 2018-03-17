@@ -8,6 +8,7 @@ protocol Coordinator: class {
 class AppCoordinator: Coordinator {
     
     let window: UIWindow
+    lazy var apiClient: APIClientType = APIClient()
     
     init(window: UIWindow) {
         self.window = window
@@ -20,7 +21,7 @@ class AppCoordinator: Coordinator {
 
 extension AppCoordinator {
     fileprivate func showRecipies() {
-        let recipiesCoordinator = RecipiesCoordinator(window: window)
+        let recipiesCoordinator = RecipiesCoordinator(window: window, apiClient: apiClient)
         recipiesCoordinator.start()
     }
 }

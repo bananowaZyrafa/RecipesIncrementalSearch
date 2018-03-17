@@ -32,11 +32,15 @@ class APIClient: APIClientType {
         case unknownError
         case invalidSelf
     }
-
+    
     
     func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]> {
         let params = ["query" : searchQuery]
-        return fetchData(urlString: EndpointURL.search, params: params).flatMap(parseObservable)
+        return fetchData(urlString: EndpointURL.search, params: params)
+            .flatMap{ [weak self] data -> Observable<SearchResponseModel> in
+                return self?.parseObservable(data: data) ?? .just(SearchResponseModel.emptyResponse)
+            }
+            .map{$0.results}
     }
     
     
@@ -106,7 +110,7 @@ class APIClient: APIClientType {
                 observer.onNext(decodedData)
                 observer.onCompleted()
             } catch {
-                observer.onError(APIError.JSONSerializationError)
+                observer.onError(error)
             }
             return Disposables.create()
         }

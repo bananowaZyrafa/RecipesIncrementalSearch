@@ -8,4 +8,6 @@ struct SearchResponseModel: Decodable {
         case count
         case results
     }
+    
+    static let emptyResponse = SearchResponseModel(count: 0, results: [])
 }

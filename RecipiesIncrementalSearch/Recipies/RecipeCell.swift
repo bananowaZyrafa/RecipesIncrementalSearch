@@ -1,19 +1,29 @@
 import Foundation
 import UIKit
+import RxSwift
 
 class RecipeCell: UITableViewCell {
     
     static let reuseIdentifier = "RecipeCell"
     
-    @IBOutlet weak var reipceImage: UIImageView!
-    @IBOutlet weak var recipeLabel: UILabel!
+    var disposeBag = DisposeBag()
+    
+    @IBOutlet weak var recipeImage: UIImageView!
+    @IBOutlet weak var recipeTitle: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     override func prepareForReuse() {
-        //dispose
+        disposeBag = DisposeBag()
     }
     
+    func configure(with recipe: RecipeGeneral) {
+        recipeTitle.text = recipe.title
+    }
+    
+    func configure(with imgae: UIImage) {
+        
+    }
 }

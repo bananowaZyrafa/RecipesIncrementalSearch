@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,38 +26,39 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecipeCell" rowHeight="44" id="kz1-aQ-dDm" customClass="RecipeCell" customModule="RecipiesIncrementalSearch" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecipeCell" rowHeight="44" id="kz1-aQ-dDm" customClass="RecipeCell" customModule="RecipiesIncrementalSearch" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kz1-aQ-dDm" id="U7R-c8-eUD">
                                                     <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gy7-4b-LpC">
-                                                            <rect key="frame" x="15" y="11" width="27.5" height="22"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Gy7-4b-LpC">
+                                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" secondItem="Gy7-4b-LpC" secondAttribute="height" multiplier="41:33" id="umM-bK-7XQ"/>
+                                                                <constraint firstAttribute="height" constant="30" id="JCS-WY-yNG"/>
+                                                                <constraint firstAttribute="width" constant="30" id="a8C-tx-gJh"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-Dk-Miq">
-                                                            <rect key="frame" x="50.5" y="13.5" width="283.5" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-Dk-Miq">
+                                                            <rect key="frame" x="53" y="13.5" width="281" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="Gy7-4b-LpC" secondAttribute="bottom" id="719-1a-fwe"/>
-                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="leading" secondItem="Gy7-4b-LpC" secondAttribute="trailing" constant="8" id="8b7-m6-Vss"/>
                                                         <constraint firstItem="QeI-Dk-Miq" firstAttribute="centerY" secondItem="U7R-c8-eUD" secondAttribute="centerY" id="Esn-tc-hCy"/>
-                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="top" secondItem="U7R-c8-eUD" secondAttribute="topMargin" id="LG3-Xc-qCe"/>
-                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="leading" secondItem="U7R-c8-eUD" secondAttribute="leadingMargin" id="M6q-TN-B0j"/>
+                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="leading" secondItem="U7R-c8-eUD" secondAttribute="leadingMargin" id="Mb3-n4-Cs3"/>
+                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="centerY" secondItem="U7R-c8-eUD" secondAttribute="centerY" id="UQc-sf-ka2"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="QeI-Dk-Miq" secondAttribute="trailing" id="wpl-yC-x9Z"/>
+                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="leading" secondItem="Gy7-4b-LpC" secondAttribute="trailing" constant="8" id="zWU-Q0-9Xa"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <viewLayoutGuide key="safeArea" id="c0y-iz-mhi"/>
                                                 <connections>
-                                                    <outlet property="recipeLabel" destination="QeI-Dk-Miq" id="cDS-v0-J7f"/>
-                                                    <outlet property="reipceImage" destination="Gy7-4b-LpC" id="aDJ-AZ-BNK"/>
+                                                    <outlet property="recipeImage" destination="Gy7-4b-LpC" id="ERu-hO-ZQt"/>
+                                                    <outlet property="recipeTitle" destination="QeI-Dk-Miq" id="rTB-7W-TBx"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -119,4 +119,7 @@
             <point key="canvasLocation" x="-572" y="133"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="placeholder" width="500" height="500"/>
+    </resources>
 </document>

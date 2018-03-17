@@ -1,5 +1,7 @@
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 class RecipiesViewController: UIViewController {
     
@@ -10,29 +12,43 @@ class RecipiesViewController: UIViewController {
         return UISearchBar()
     }()
     
+    private let disposeBag = DisposeBag()
     
-    var viewModel: RecipiesViewModelType! {
-        didSet {
-            bindViewModel()
-        }
-    }
+    var viewModel: RecipiesViewModelType!
+//        didSet {
+//            bindViewModel()
+//        }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareSearchBar()
         prepareTableView()
+        bindViewModel()
     }
     
     func prepareTableView() {
         tableView.delegate = viewModel
         tableView.dataSource = viewModel
-        tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.reuseIdentifier)
     }
     
     func bindViewModel() {
-        
+        viewModel.fetchGeneralRecipies(for: "cake")
+            .catchError({ (error) -> Observable<[RecipeGeneral]> in
+                print(error)
+                return Observable.just([])
+            })
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: {[weak self] fetchedRecipies in
+                self?.render(recipies: fetchedRecipies)
+            })
+            .disposed(by: disposeBag)
     }
     
+    private func render(recipies: [RecipeGeneral]) {
+        viewModel.recipies = recipies
+        tableView.reloadData()
+    }
 }
 
 
