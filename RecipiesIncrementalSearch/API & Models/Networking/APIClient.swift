@@ -3,6 +3,7 @@ import RxSwift
 
 protocol APIClientType {
     func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]>
+    func fetchImage(for imageURL: String) -> Observable<UIImage>
 //    func fetchDetailedRecipies(for identifier: Int) -> Observable<
     
 }
@@ -43,11 +44,18 @@ class APIClient: APIClientType {
             .map{$0.results}
     }
     
+    func fetchImage(for imageURL: String) -> Observable<UIImage> {
+        return fetchData(urlString: imageURL)
+            .flatMap { data -> Observable<UIImage> in
+                let image = UIImage(data: data) ?? UIImage.godtPlaceholder
+                return Observable.just(image)
+            }
+        
+    }
     
     private func fetchData(urlString: String, params: [String: String] = [:]) -> Observable<Data> {
         return Observable.create{ [weak self] observer in
-            guard let validURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                let url = URL(string: validURLString) else {
+            guard let url = URL(string: urlString) else {
                     observer.onError(APIError.invalidURL)
                     return Disposables.create()
             }
@@ -118,3 +126,9 @@ class APIClient: APIClientType {
     
     
 }
+
+
+
+
+
+

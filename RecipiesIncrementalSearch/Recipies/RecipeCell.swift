@@ -23,7 +23,7 @@ class RecipeCell: UITableViewCell {
         recipeTitle.text = recipe.title
     }
     
-    func configure(with imgae: UIImage) {
-        
+    func configure(with image: UIImage) {
+        recipeImage.image = image
     }
 }

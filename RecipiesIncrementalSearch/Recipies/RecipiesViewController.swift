@@ -30,6 +30,8 @@ class RecipiesViewController: UIViewController {
     func prepareTableView() {
         tableView.delegate = viewModel
         tableView.dataSource = viewModel
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44.0
     }
     
     func bindViewModel() {

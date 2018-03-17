@@ -33,24 +33,28 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Gy7-4b-LpC">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Gy7-4b-LpC">
                                                             <rect key="frame" x="15" y="7" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="JCS-WY-yNG"/>
                                                                 <constraint firstAttribute="width" constant="30" id="a8C-tx-gJh"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-Dk-Miq">
-                                                            <rect key="frame" x="53" y="13.5" width="281" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-Dk-Miq">
+                                                            <rect key="frame" x="53" y="11" width="281" height="22"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="centerY" secondItem="U7R-c8-eUD" secondAttribute="centerY" id="Esn-tc-hCy"/>
                                                         <constraint firstItem="Gy7-4b-LpC" firstAttribute="leading" secondItem="U7R-c8-eUD" secondAttribute="leadingMargin" id="Mb3-n4-Cs3"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Gy7-4b-LpC" secondAttribute="bottom" constant="7" id="R0p-87-xan"/>
+                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="top" secondItem="U7R-c8-eUD" secondAttribute="topMargin" id="Ths-wt-NYA"/>
                                                         <constraint firstItem="Gy7-4b-LpC" firstAttribute="centerY" secondItem="U7R-c8-eUD" secondAttribute="centerY" id="UQc-sf-ka2"/>
+                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="top" secondItem="U7R-c8-eUD" secondAttribute="top" constant="7" id="dFl-d9-BfK"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="QeI-Dk-Miq" secondAttribute="bottom" id="mCx-B8-Ncs"/>
+                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="centerY" secondItem="U7R-c8-eUD" secondAttribute="centerY" id="tWW-qU-TcM"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="QeI-Dk-Miq" secondAttribute="trailing" id="wpl-yC-x9Z"/>
                                                         <constraint firstItem="QeI-Dk-Miq" firstAttribute="leading" secondItem="Gy7-4b-LpC" secondAttribute="trailing" constant="8" id="zWU-Q0-9Xa"/>
                                                     </constraints>
