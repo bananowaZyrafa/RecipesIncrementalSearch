@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,10 +19,67 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JcS-lf-4KO">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NPW-gJ-Ge7">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecipeCell" rowHeight="44" id="kz1-aQ-dDm" customClass="RecipeCell" customModule="RecipiesIncrementalSearch" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kz1-aQ-dDm" id="U7R-c8-eUD">
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gy7-4b-LpC">
+                                                            <rect key="frame" x="15" y="11" width="27.5" height="22"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="Gy7-4b-LpC" secondAttribute="height" multiplier="41:33" id="umM-bK-7XQ"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-Dk-Miq">
+                                                            <rect key="frame" x="50.5" y="13.5" width="283.5" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="Gy7-4b-LpC" secondAttribute="bottom" id="719-1a-fwe"/>
+                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="leading" secondItem="Gy7-4b-LpC" secondAttribute="trailing" constant="8" id="8b7-m6-Vss"/>
+                                                        <constraint firstItem="QeI-Dk-Miq" firstAttribute="centerY" secondItem="U7R-c8-eUD" secondAttribute="centerY" id="Esn-tc-hCy"/>
+                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="top" secondItem="U7R-c8-eUD" secondAttribute="topMargin" id="LG3-Xc-qCe"/>
+                                                        <constraint firstItem="Gy7-4b-LpC" firstAttribute="leading" secondItem="U7R-c8-eUD" secondAttribute="leadingMargin" id="M6q-TN-B0j"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="QeI-Dk-Miq" secondAttribute="trailing" id="wpl-yC-x9Z"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="recipeLabel" destination="QeI-Dk-Miq" id="cDS-v0-J7f"/>
+                                                    <outlet property="reipceImage" destination="Gy7-4b-LpC" id="aDJ-AZ-BNK"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JcS-lf-4KO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1Pb-Zb-LZi"/>
+                            <constraint firstItem="JcS-lf-4KO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Pev-05-NdY"/>
+                            <constraint firstItem="JcS-lf-4KO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="coe-ck-PER"/>
+                            <constraint firstItem="JcS-lf-4KO" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="zwO-7j-e1D"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Rac-PD-VZE"/>
+                    <connections>
+                        <outlet property="stackView" destination="JcS-lf-4KO" id="C2s-OD-qVz"/>
+                        <outlet property="tableView" destination="NPW-gJ-Ge7" id="lqA-xg-dGV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
