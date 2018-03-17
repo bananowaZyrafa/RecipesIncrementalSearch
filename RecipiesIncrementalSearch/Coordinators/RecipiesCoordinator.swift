@@ -1,9 +1,24 @@
-//
-//  RecipiesCoordinator.swift
-//  RecipiesIncrementalSearch
-//
-//  Created by Paweł W. on 17/03/2018.
-//  Copyright © 2018 Bart. All rights reserved.
-//
-
 import Foundation
+import UIKit
+
+class RecipiesCoordinator: Coordinator {
+    
+    let window: UIWindow
+    
+    init(window: UIWindow) {
+        self.window = window
+    }
+    
+    func start() {
+        let viewModel = RecipiesViewModel()
+        guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
+            as? UINavigationController else {
+                fatalError("Wrong vc setup")
+        }
+        guard let vc = recipiesNavigationViewController.topViewController as? RecipiesViewController else {
+            fatalError("Wrong storyboard setup")
+        }
+        vc.viewModel = viewModel
+        window.rootViewController = recipiesNavigationViewController
+    }
+}

@@ -1,6 +1,4 @@
 import Foundation
-
-import Foundation
 import UIKit
 
 protocol Coordinator: class {
