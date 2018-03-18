@@ -16,7 +16,7 @@ class APIClient: APIClientType {
         self.urlSession = urlSession
     }
     
-    private struct EndpointURL {
+    struct EndpointURL {
         static let search = "https://www.godt.no/api/search/recipes"
         static let details = "https://www.godt.no/api/recipes/"
         static let webview = "https://www.godt.no/#!/oppskrift/"
@@ -31,6 +31,7 @@ class APIClient: APIClientType {
         case invalidDataReceived
         case unknownError
         case invalidSelf
+        case networkConnectionProblem
     }
     
     

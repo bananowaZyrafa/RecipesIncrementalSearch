@@ -24,7 +24,7 @@ class RecipiesViewModel: NSObject, RecipiesViewModelType {
         guard searchQuery.count > 0 else {
             return .just([])
         }
-        return apiClient.fetchGeneralRecipies(for: searchQuery).catchErrorJustReturn([])
+        return apiClient.fetchGeneralRecipies(for: searchQuery)
     }
     
     
@@ -52,17 +52,6 @@ extension RecipiesViewModel {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let viewModel = DetailsViewModel(apiClient: apiClient, recipeID: recipies[indexPath.row].id)
-//        guard let vc = ViewControllerFactory.details.viewController() as? DetailsViewController else {
-//            fatalError("Error when instatiating Details view controller")
-//        }
-//        vc.viewModel = viewModel
-//        guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
-//            as? UINavigationController else {
-//                fatalError("Wrong vc setup")
-//        }
-//        recipiesNavigationViewController.pushViewController(vc, animated: true)
-        
         coordinatorDelegate?.didSelectRecipe(with: recipies[indexPath.row].id)
     }
 

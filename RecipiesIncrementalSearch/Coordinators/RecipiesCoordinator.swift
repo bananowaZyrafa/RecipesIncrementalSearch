@@ -9,6 +9,7 @@ class RecipiesCoordinator: Coordinator, RecipiesCordinatorDelegate {
     
     let window: UIWindow
     let apiClient: APIClientType
+    var detailsCoordinator: DetailsCoordinator!
     
     init(window: UIWindow, apiClient: APIClientType) {
         self.window = window
@@ -34,7 +35,7 @@ class RecipiesCoordinator: Coordinator, RecipiesCordinatorDelegate {
             as? UINavigationController else {
                 fatalError("Wrong vc setup")
         }
-        let detailsCoordinator = DetailsCoordinator(navigationController: recipiesNavigationViewController, apiClient: apiClient, recipeID: id)
+        detailsCoordinator = DetailsCoordinator(navigationController: recipiesNavigationViewController, apiClient: apiClient, recipeID: id)
         detailsCoordinator.start()
     }
 }

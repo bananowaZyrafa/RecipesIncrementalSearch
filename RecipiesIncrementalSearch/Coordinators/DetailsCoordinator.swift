@@ -1,7 +1,12 @@
 import Foundation
 import UIKit
+import SafariServices
 
-class DetailsCoordinator: Coordinator {
+protocol DetailsCoordinatorDelegate: class {
+    func showWebView(for recipeID: Int)
+}
+
+class DetailsCoordinator: Coordinator, DetailsCoordinatorDelegate {
     
     let apiClient: APIClientType
     let recipeID: Int
@@ -15,6 +20,7 @@ class DetailsCoordinator: Coordinator {
     
     func start() {
         let viewModel = DetailsViewModel(apiClient: apiClient, recipeID: recipeID)
+        viewModel.coordinatorDelegate = self
         guard let vc = ViewControllerFactory.details.viewController() as? DetailsViewController else {
             fatalError("Error when instatiating Details view controller")
         }
@@ -22,5 +28,12 @@ class DetailsCoordinator: Coordinator {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    
+    func showWebView(for recipeID: Int) {
+        let recipeURLString = APIClient.EndpointURL.webview
+        guard let recipeURL = URL(string: recipeURLString.appending("\(recipeID)")) else {
+            return
+        }
+        let safariVC = SFSafariViewController(url: recipeURL)
+        navigationController.present(safariVC, animated: true, completion: nil)
+    }
 }

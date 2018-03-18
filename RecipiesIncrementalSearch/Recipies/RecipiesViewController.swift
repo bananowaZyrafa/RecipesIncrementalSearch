@@ -38,6 +38,8 @@ class RecipiesViewController: UIViewController {
             .debounce(0.5, scheduler: ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
             .do(onNext: {[weak self] (title) in
                 self?.startActivityIndicator()
+                },onError:{ [weak self] error in
+                    self?.presentError(error: error)
             })
             .flatMapLatest(viewModel.fetchGeneralRecipies)
             .catchError({ (error) -> Observable<[RecipeGeneral]> in
@@ -57,6 +59,13 @@ class RecipiesViewController: UIViewController {
     private func render(recipies: [RecipeGeneral]) {
         viewModel.recipies = recipies
         tableView.reloadData()
+    }
+    
+    func presentError(error: Error) {
+        let alert = UIAlertController(title: "OOOPS", message: "Error occured", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
