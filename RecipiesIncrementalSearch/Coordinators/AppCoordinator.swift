@@ -9,6 +9,7 @@ class AppCoordinator: Coordinator {
     
     let window: UIWindow
     lazy var apiClient: APIClientType = APIClient()
+    var recipiesCoordinator: RecipiesCoordinator!
     
     init(window: UIWindow) {
         self.window = window
@@ -21,7 +22,7 @@ class AppCoordinator: Coordinator {
 
 extension AppCoordinator {
     fileprivate func showRecipies() {
-        let recipiesCoordinator = RecipiesCoordinator(window: window, apiClient: apiClient)
+        recipiesCoordinator = RecipiesCoordinator(window: window, apiClient: apiClient)
         recipiesCoordinator.start()
     }
 }

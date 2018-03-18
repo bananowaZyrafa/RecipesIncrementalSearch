@@ -13,7 +13,7 @@ class RecipiesViewModel: NSObject, RecipiesViewModelType {
     
     let apiClient: APIClientType
     var recipies: [RecipeGeneral] = []
-    weak var delegate: RecipiesCordinatorDelegate?
+    weak var coordinatorDelegate: RecipiesCordinatorDelegate?
     
     init(apiClient: APIClientType) {
         self.apiClient = apiClient
@@ -63,7 +63,7 @@ extension RecipiesViewModel {
 //        }
 //        recipiesNavigationViewController.pushViewController(vc, animated: true)
         
-        delegate?.didSelectRecipe(with: recipies[indexPath.row].id)
+        coordinatorDelegate?.didSelectRecipe(with: recipies[indexPath.row].id)
     }
 
 }

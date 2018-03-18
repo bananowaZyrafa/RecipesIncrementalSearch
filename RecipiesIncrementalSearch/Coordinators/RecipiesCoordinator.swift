@@ -17,7 +17,6 @@ class RecipiesCoordinator: Coordinator, RecipiesCordinatorDelegate {
     
     func start() {
         let viewModel = RecipiesViewModel(apiClient: apiClient)
-        viewModel.delegate = self
         guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
             as? UINavigationController else {
                 fatalError("Wrong vc setup")
@@ -26,15 +25,16 @@ class RecipiesCoordinator: Coordinator, RecipiesCordinatorDelegate {
             fatalError("Wrong storyboard setup")
         }
         vc.viewModel = viewModel
+        viewModel.coordinatorDelegate = self
         window.rootViewController = recipiesNavigationViewController
     }
     
     func didSelectRecipe(with id: Int)  {
-        guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
+        guard let recipiesNavigationViewController = window.rootViewController
             as? UINavigationController else {
                 fatalError("Wrong vc setup")
         }
-        let detailsCoordinator = DetailsCoordinator(navigationController: window.rootViewController as! UINavigationController, apiClient: apiClient, recipeID: id)
+        let detailsCoordinator = DetailsCoordinator(navigationController: recipiesNavigationViewController, apiClient: apiClient, recipeID: id)
         detailsCoordinator.start()
     }
 }
