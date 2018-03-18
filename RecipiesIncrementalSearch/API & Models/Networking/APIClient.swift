@@ -4,8 +4,7 @@ import RxSwift
 protocol APIClientType {
     func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]>
     func fetchImage(for imageURL: String) -> Observable<UIImage>
-//    func fetchDetailedRecipies(for identifier: Int) -> Observable<
-    
+    func fetchRecipeDetails(for recipID: Int) -> Observable<RecipeDetails>
 }
 
 class APIClient: APIClientType {
@@ -53,6 +52,15 @@ class APIClient: APIClientType {
                 return Observable.just(image)
             }
         
+    }
+    
+    func fetchRecipeDetails(for recipeID: Int) -> Observable<RecipeDetails> {
+        var detailsEndpoint = EndpointURL.details
+        detailsEndpoint.append("\(recipeID)")
+        return fetchData(urlString: detailsEndpoint)
+            .flatMap{ [weak self] data -> Observable<RecipeDetails> in
+                return self?.parseObservable(data: data) ?? .just(RecipeDetails.emptyResponse)
+        }
     }
     
     private func fetchData(urlString: String, params: [String: String] = [:]) -> Observable<Data> {

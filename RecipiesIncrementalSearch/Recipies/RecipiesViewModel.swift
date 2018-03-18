@@ -13,6 +13,7 @@ class RecipiesViewModel: NSObject, RecipiesViewModelType {
     
     let apiClient: APIClientType
     var recipies: [RecipeGeneral] = []
+    weak var delegate: RecipiesCordinatorDelegate?
     
     init(apiClient: APIClientType) {
         self.apiClient = apiClient
@@ -48,6 +49,21 @@ extension RecipiesViewModel {
         cell.configure(with: currentRecipe)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let viewModel = DetailsViewModel(apiClient: apiClient, recipeID: recipies[indexPath.row].id)
+//        guard let vc = ViewControllerFactory.details.viewController() as? DetailsViewController else {
+//            fatalError("Error when instatiating Details view controller")
+//        }
+//        vc.viewModel = viewModel
+//        guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
+//            as? UINavigationController else {
+//                fatalError("Wrong vc setup")
+//        }
+//        recipiesNavigationViewController.pushViewController(vc, animated: true)
+        
+        delegate?.didSelectRecipe(with: recipies[indexPath.row].id)
     }
 
 }

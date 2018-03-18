@@ -1,7 +1,11 @@
 import Foundation
 import UIKit
 
-class RecipiesCoordinator: Coordinator {
+protocol RecipiesCordinatorDelegate: class {
+    func didSelectRecipe(with id: Int)
+}
+
+class RecipiesCoordinator: Coordinator, RecipiesCordinatorDelegate {
     
     let window: UIWindow
     let apiClient: APIClientType
@@ -13,6 +17,7 @@ class RecipiesCoordinator: Coordinator {
     
     func start() {
         let viewModel = RecipiesViewModel(apiClient: apiClient)
+        viewModel.delegate = self
         guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
             as? UINavigationController else {
                 fatalError("Wrong vc setup")
@@ -22,5 +27,14 @@ class RecipiesCoordinator: Coordinator {
         }
         vc.viewModel = viewModel
         window.rootViewController = recipiesNavigationViewController
+    }
+    
+    func didSelectRecipe(with id: Int)  {
+        guard let recipiesNavigationViewController = ViewControllerFactory.recipies.viewController()
+            as? UINavigationController else {
+                fatalError("Wrong vc setup")
+        }
+        let detailsCoordinator = DetailsCoordinator(navigationController: window.rootViewController as! UINavigationController, apiClient: apiClient, recipeID: id)
+        detailsCoordinator.start()
     }
 }

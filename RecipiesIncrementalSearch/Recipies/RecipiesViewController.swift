@@ -15,9 +15,6 @@ class RecipiesViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     var viewModel: RecipiesViewModelType!
-//        didSet {
-//            bindViewModel()
-//        }
     
     
     override func viewDidLoad() {

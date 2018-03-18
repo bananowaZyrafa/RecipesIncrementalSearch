@@ -3,6 +3,7 @@ import UIKit
 
 enum ViewControllerFactory {
     case recipies
+    case details
 }
 
 extension ViewControllerFactory {
@@ -18,6 +19,12 @@ extension ViewControllerFactory {
                     fatalError("Recipies navigation controller instatiating error")
             }
             return nc
+            
+        case .details:
+            guard let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as? DetailsViewController else {
+                fatalError("Details view controller instatiating error")
+            }
+            return vc
         }
     }
 }
