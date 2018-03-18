@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
+import Dwifft
 
 class RecipiesViewController: UIViewController {
     
@@ -32,26 +33,38 @@ class RecipiesViewController: UIViewController {
     }
     
     func bindViewModel() {
+        
+        let searchObservable =
         searchBar.rx.text
             .orEmpty
             .skip(1)
             .debounce(0.5, scheduler: ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
-            .do(onNext: {[weak self] (title) in
-                self?.startActivityIndicator()
+            .flatMapLatest(fetchGeneralRecipies)
+            .share()
+            
+        Observable.zip(searchObservable, searchObservable.startWith(viewModel.recipies))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: {[weak self] (currentRecipies, previousRecipies) -> Void in
+                self?.updateRecipies(currentRecipies: currentRecipies, previousRecipies: previousRecipies)
+            }).disposed(by: disposeBag)
+        
+    }
+    
+    func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]> {
+        self.startActivityIndicator()
+        return viewModel.fetchGeneralRecipies(for: searchQuery)
+            .observeOn(MainScheduler.instance)
+            .do(onNext: {[weak self] (fetchedRecipies) in
+                self?.render(recipies: fetchedRecipies)
+                self?.stopActivityIndicator()
                 },onError:{ [weak self] error in
                     self?.presentError(error: error)
             })
-            .flatMapLatest(viewModel.fetchGeneralRecipies)
-            .catchError({ (error) -> Observable<[RecipeGeneral]> in
+            .catchError({[weak self] (error) -> Observable<[RecipeGeneral]> in
                 print(error)
+                self?.presentError(error: error)
                 return Observable.just([])
             })
-            .asDriver(onErrorJustReturn: [])
-            .drive(onNext: {[weak self] fetchedRecipies in
-                self?.render(recipies: fetchedRecipies)
-                self?.stopActivityIndicator()
-            })
-            .disposed(by: disposeBag)
         
     }
     
@@ -65,7 +78,23 @@ class RecipiesViewController: UIViewController {
         let alert = UIAlertController(title: "OOOPS", message: "Error occured", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(alertAction)
-        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    private func updateRecipies(currentRecipies:[RecipeGeneral], previousRecipies: [RecipeGeneral]) {
+        /*let (deletedIndexPaths, insertedIndexPaths) = currentRecipies.diffIndexs(previousRecipies)
+        if #available(iOS 11.0, *) {
+            self.tableView.performBatchUpdates({ () -> Void in
+                self.tableView.deleteItemsAtIndexPaths(deletedIndexPaths)
+                self.tableView.insertItemsAtIndexPaths(insertedIndexPaths)
+            }, completion: nil)
+        } else {
+            return
+        }
+         */
     }
 }
 

@@ -32,6 +32,7 @@
 		C6DEF0F6205DEE0A00721DFF /* DetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6DEF0F5205DEE0A00721DFF /* DetailsHeader.xib */; };
 		C6DEF0F8205DF90B00721DFF /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DEF0F7205DF90B00721DFF /* DescriptionCell.swift */; };
 		C6DEF0FA205DFA5700721DFF /* InfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DEF0F9205DFA5700721DFF /* InfoCell.swift */; };
+		C6DEF0FC205E0C8200721DFF /* Array+Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DEF0FB205E0C8200721DFF /* Array+Diff.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		C6DEF0F5205DEE0A00721DFF /* DetailsHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsHeader.xib; sourceTree = "<group>"; };
 		C6DEF0F7205DF90B00721DFF /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		C6DEF0F9205DFA5700721DFF /* InfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
+		C6DEF0FB205E0C8200721DFF /* Array+Diff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Diff.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				C64733CD205DB5EA0043DD09 /* UIImage+Extensions.swift */,
+				C6DEF0FB205E0C8200721DFF /* Array+Diff.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -374,11 +377,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-RecipiesIncrementalSearch/Pods-RecipiesIncrementalSearch-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Dwifft/Dwifft.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dwifft.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
@@ -465,6 +470,7 @@
 				C6DEF0FA205DFA5700721DFF /* InfoCell.swift in Sources */,
 				C6B4E2FF205D7E5A0036445F /* RecipiesViewController.swift in Sources */,
 				C64733D3205DDEF50043DD09 /* DetailsCoordinator.swift in Sources */,
+				C6DEF0FC205E0C8200721DFF /* Array+Diff.swift in Sources */,
 				C6B4E301205D7E6C0036445F /* RecipiesViewModel.swift in Sources */,
 				C6B4E314205D89CA0036445F /* RecipeCell.swift in Sources */,
 				C6B4E307205D7EBB0036445F /* DetailsViewModel.swift in Sources */,
