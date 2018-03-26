@@ -30,7 +30,6 @@ class RecipiesViewModel: NSObject, RecipiesViewModelType {
         })
     }
     
-    
 }
 
 extension RecipiesViewModel {

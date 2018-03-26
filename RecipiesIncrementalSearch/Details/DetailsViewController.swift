@@ -3,10 +3,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class DetailsViewController: BaseViewController {
+class DetailsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var viewModel: DetailsViewModelType!
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +28,8 @@ class DetailsViewController: BaseViewController {
             .subscribe(onNext: {[weak self] fetchedRecipies in
                 self?.render(details: fetchedRecipies)
                 self?.stopActivityIndicator()
-                }, onError:{ [weak self] error in
-                    self?.presentError(error: error)
-            }).disposed(by: disposeBag)
-        viewModel.errorMessage.bind(to: errorMessage).disposed(by: disposeBag)
+                })
+            .disposed(by: disposeBag)
     }
     
     private func render(details: RecipeDetails) {
@@ -40,21 +39,5 @@ class DetailsViewController: BaseViewController {
         tableView.isHidden = false
     }
     
-    func presentError(error: Error) {
-        
-    }
-}
-
-extension DetailsViewController {
-    func startActivityIndicator() {
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        }
-    }
-    func stopActivityIndicator() {
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
-    }
 }
 

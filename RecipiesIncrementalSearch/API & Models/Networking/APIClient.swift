@@ -7,6 +7,7 @@ protocol APIClientType {
     func fetchRecipeDetails(for recipID: Int) -> Observable<RecipeDetails>
 }
 
+
 class APIClient: APIClientType {
 
     private let urlSession: URLSession
@@ -20,18 +21,6 @@ class APIClient: APIClientType {
         static let search = "https://www.godt.no/api/search/recipes"
         static let details = "https://www.godt.no/api/recipes/"
         static let webview = "https://www.godt.no/#!/oppskrift/"
-    }
-    
-    enum APIError: Error {
-        case invalidURL
-        case parsingError
-        case imageDataError
-        case invalidResponseType
-        case JSONSerializationError
-        case invalidDataReceived
-        case unknownError
-        case invalidSelf
-        case networkConnectionProblem
     }
     
     

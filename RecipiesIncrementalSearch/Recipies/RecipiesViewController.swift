@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 import Dwifft
 
-class RecipiesViewController: BaseViewController {
+class RecipiesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var stackView: UIStackView!
@@ -13,7 +13,11 @@ class RecipiesViewController: BaseViewController {
         return UISearchBar()
     }()
     
+    lazy var errorViewController: ErrorViewController = {
+        return ErrorViewController()
+    }()
     
+    private let disposeBag = DisposeBag()
     var viewModel: RecipiesViewModelType!
     
     override func viewDidLoad() {
@@ -31,61 +35,61 @@ class RecipiesViewController: BaseViewController {
     }
     
     func bindViewModel() {
-        
         let searchObservable =
         searchBar.rx.text
             .orEmpty
             .skip(1)
-            .debounce(0.5, scheduler: ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
+            .debounce(0.5, scheduler: SerialDispatchQueueScheduler.init(qos: .userInitiated))
             .flatMapLatest(fetchGeneralRecipies)
-            .share()
         
         searchObservable
-            .asDriver(onErrorJustReturn: [])
-            .drive(onNext: {[weak self] fetchedRecipies in
-                self?.render(recipies: fetchedRecipies)
-                self?.stopActivityIndicator()
+            .debug()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: {[weak self] event in
+                guard let safeSelf = self else { return }
+                switch event {
+                case .next(let fetchedRecipies):
+                    safeSelf.errorViewController.remove()
+                    safeSelf.render(recipies: fetchedRecipies)
+                    safeSelf.tableView.alpha = 1.0
+                    safeSelf.stopActivityIndicator()
+                case .error(_):
+                    safeSelf.add(safeSelf.errorViewController)
+                    safeSelf.prepareErrorController()
+                    safeSelf.tableView.alpha = 0.0
+                    safeSelf.stopActivityIndicator()
+                case .completed:
+                    return
+                }
             })
             .disposed(by: disposeBag)
-            
-        Observable.zip(searchObservable, searchObservable.startWith(viewModel.recipies))
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: {[weak self] (currentRecipies, previousRecipies) -> Void in
-                self?.updateRecipies(currentRecipies: currentRecipies, previousRecipies: previousRecipies)
-            }).disposed(by: disposeBag)
-        
-        viewModel.errorMessage.bind(to: errorMessage).disposed(by: disposeBag)
         
     }
     
-    func fetchGeneralRecipies(for searchQuery: String) -> Observable<[RecipeGeneral]> {
+    func prepareErrorController() {
+        errorViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        errorViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorViewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        errorViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    func fetchGeneralRecipies(for searchQuery: String) -> Observable<Event<[RecipeGeneral]>> {
         self.startActivityIndicator()
         return viewModel.fetchGeneralRecipies(for: searchQuery)
             .observeOn(MainScheduler.instance)
             .do(onNext: {[weak self] (fetchedRecipies) in
                 self?.stopActivityIndicator()
             })
-            .catchError({(error) -> Observable<[RecipeGeneral]> in
-                print(error)
-                return Observable.just([])
-            })
+            .materialize()
+        
     }
-    
     
     private func render(recipies: [RecipeGeneral]) {
         viewModel.recipies = recipies
+        updateRecipies(currentRecipies: viewModel.recipies, previousRecipies: recipies)
         tableView.reloadData()
     }
-    
-//    func presentError(error: Error) {
-//        let alert = UIAlertController(title: "OOOPS", message: "Error occured", preferredStyle: .alert)
-//        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-//        alert.addAction(alertAction)
-//        DispatchQueue.main.async { [weak self] in
-//            self?.present(alert, animated: true, completion: nil)
-//        }
-//
-//    }
     
     private func updateRecipies(currentRecipies:[RecipeGeneral], previousRecipies: [RecipeGeneral]) {
         /*let (deletedIndexPaths, insertedIndexPaths) = currentRecipies.diffIndexs(previousRecipies)
@@ -124,19 +128,6 @@ extension PrepareView {
     private func embedSearchOverTableView() {
         searchBar.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
         stackView.insertArrangedSubview(searchBar, at: 0)
-    }
-}
-
-extension RecipiesViewController {
-    func startActivityIndicator() {
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        }
-    }
-    func stopActivityIndicator() {
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
     }
 }
 

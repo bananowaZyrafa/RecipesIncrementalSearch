@@ -6,6 +6,7 @@ typealias DetailsViewModelType = BaseViewModelProtocol & DetailsViewModelProtoco
 
 protocol DetailsViewModelProtocol {
     func fetchRecipeDetails() -> Observable<RecipeDetails>
+    func popViewController()
     var recipeDetails: RecipeDetails? { get set }
 }
 
@@ -29,6 +30,11 @@ class DetailsViewModel: NSObject, DetailsViewModelType {
         return apiClient.fetchRecipeDetails(for: recipeID).do(onError: { [weak self] (error) in
             self?.errorMessage.onNext(error.localizedDescription)
         })
+    }
+    
+    
+    func popViewController() {
+        
     }
     
 }
