@@ -3,9 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class DetailsViewController: UIViewController {
-    
-    private let disposeBag = DisposeBag()
+class DetailsViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var viewModel: DetailsViewModelType!
@@ -32,6 +30,7 @@ class DetailsViewController: UIViewController {
                 }, onError:{ [weak self] error in
                     self?.presentError(error: error)
             }).disposed(by: disposeBag)
+        viewModel.errorMessage.bind(to: errorMessage).disposed(by: disposeBag)
     }
     
     private func render(details: RecipeDetails) {

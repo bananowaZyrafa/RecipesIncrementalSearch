@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-typealias DetailsViewModelType = DetailsViewModelProtocol & UITableViewDelegate & UITableViewDataSource
+typealias DetailsViewModelType = BaseViewModelProtocol & DetailsViewModelProtocol & UITableViewDelegate & UITableViewDataSource
 
 protocol DetailsViewModelProtocol {
     func fetchRecipeDetails() -> Observable<RecipeDetails>
@@ -15,6 +15,8 @@ class DetailsViewModel: NSObject, DetailsViewModelType {
     var recipeDetails: RecipeDetails?
     let recipeID: Int
     
+    var errorMessage: PublishSubject<String?> = PublishSubject()
+    
     weak var coordinatorDelegate: DetailsCoordinatorDelegate?
     
     init(apiClient: APIClientType, recipeID: Int) {
@@ -24,7 +26,9 @@ class DetailsViewModel: NSObject, DetailsViewModelType {
     
     //MARK: Network requests
     func fetchRecipeDetails() -> Observable<RecipeDetails> {
-        return apiClient.fetchRecipeDetails(for: recipeID)
+        return apiClient.fetchRecipeDetails(for: recipeID).do(onError: { [weak self] (error) in
+            self?.errorMessage.onNext(error.localizedDescription)
+        })
     }
     
 }

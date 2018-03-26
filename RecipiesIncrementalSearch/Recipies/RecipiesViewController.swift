@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 import Dwifft
 
-class RecipiesViewController: UIViewController {
+class RecipiesViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var stackView: UIStackView!
@@ -13,10 +13,8 @@ class RecipiesViewController: UIViewController {
         return UISearchBar()
     }()
     
-    private let disposeBag = DisposeBag()
     
     var viewModel: RecipiesViewModelType!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,12 +39,22 @@ class RecipiesViewController: UIViewController {
             .debounce(0.5, scheduler: ConcurrentDispatchQueueScheduler.init(qos: .userInitiated))
             .flatMapLatest(fetchGeneralRecipies)
             .share()
+        
+        searchObservable
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: {[weak self] fetchedRecipies in
+                self?.render(recipies: fetchedRecipies)
+                self?.stopActivityIndicator()
+            })
+            .disposed(by: disposeBag)
             
         Observable.zip(searchObservable, searchObservable.startWith(viewModel.recipies))
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: {[weak self] (currentRecipies, previousRecipies) -> Void in
                 self?.updateRecipies(currentRecipies: currentRecipies, previousRecipies: previousRecipies)
             }).disposed(by: disposeBag)
+        
+        viewModel.errorMessage.bind(to: errorMessage).disposed(by: disposeBag)
         
     }
     
@@ -55,17 +63,12 @@ class RecipiesViewController: UIViewController {
         return viewModel.fetchGeneralRecipies(for: searchQuery)
             .observeOn(MainScheduler.instance)
             .do(onNext: {[weak self] (fetchedRecipies) in
-                self?.render(recipies: fetchedRecipies)
                 self?.stopActivityIndicator()
-                },onError:{ [weak self] error in
-                    self?.presentError(error: error)
             })
-            .catchError({[weak self] (error) -> Observable<[RecipeGeneral]> in
+            .catchError({(error) -> Observable<[RecipeGeneral]> in
                 print(error)
-                self?.presentError(error: error)
                 return Observable.just([])
             })
-        
     }
     
     
@@ -74,15 +77,15 @@ class RecipiesViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func presentError(error: Error) {
-        let alert = UIAlertController(title: "OOOPS", message: "Error occured", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-        alert.addAction(alertAction)
-        DispatchQueue.main.async { [weak self] in
-            self?.present(alert, animated: true, completion: nil)
-        }
-        
-    }
+//    func presentError(error: Error) {
+//        let alert = UIAlertController(title: "OOOPS", message: "Error occured", preferredStyle: .alert)
+//        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+//        alert.addAction(alertAction)
+//        DispatchQueue.main.async { [weak self] in
+//            self?.present(alert, animated: true, completion: nil)
+//        }
+//
+//    }
     
     private func updateRecipies(currentRecipies:[RecipeGeneral], previousRecipies: [RecipeGeneral]) {
         /*let (deletedIndexPaths, insertedIndexPaths) = currentRecipies.diffIndexs(previousRecipies)

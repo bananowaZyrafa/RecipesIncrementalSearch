@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-typealias RecipiesViewModelType = RecipiesViewModelProtocol & UITableViewDelegate & UITableViewDataSource
+typealias RecipiesViewModelType = BaseViewModelProtocol & RecipiesViewModelProtocol & UITableViewDelegate & UITableViewDataSource
 
 protocol RecipiesViewModelProtocol {
     var recipies: [RecipeGeneral]  { get set }
@@ -10,6 +10,7 @@ protocol RecipiesViewModelProtocol {
 }
 
 class RecipiesViewModel: NSObject, RecipiesViewModelType {
+    var errorMessage: PublishSubject<String?> = PublishSubject()
     
     let apiClient: APIClientType
     var recipies: [RecipeGeneral] = []
@@ -24,7 +25,9 @@ class RecipiesViewModel: NSObject, RecipiesViewModelType {
         guard searchQuery.count > 0 else {
             return .just([])
         }
-        return apiClient.fetchGeneralRecipies(for: searchQuery)
+        return apiClient.fetchGeneralRecipies(for: searchQuery).do(onError: { [weak self] (error) in
+            self?.errorMessage.onNext(error.localizedDescription)
+        })
     }
     
     
