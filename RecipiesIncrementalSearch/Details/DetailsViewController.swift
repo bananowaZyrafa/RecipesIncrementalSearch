@@ -9,6 +9,10 @@ class DetailsViewController: UIViewController {
     var viewModel: DetailsViewModelType!
     private let disposeBag = DisposeBag()
     
+    lazy var errorViewController: DetailsErrorViewController = {
+        return DetailsErrorViewController()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
@@ -23,12 +27,29 @@ class DetailsViewController: UIViewController {
     }
     
     func bindViewModel() {
+        startActivityIndicator()
         viewModel.fetchRecipeDetails()
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: {[weak self] fetchedRecipies in
-                self?.render(details: fetchedRecipies)
-                self?.stopActivityIndicator()
-                })
+            .materialize()
+            .subscribe(onNext: { [weak self] event in
+                guard let safeSelf = self else { return }
+                switch event {
+                case .next(let fetchedDetails):
+                    safeSelf.errorViewController.remove()
+                    safeSelf.render(details: fetchedDetails)
+                    safeSelf.tableView.alpha = 1.0
+                    safeSelf.tableView.isUserInteractionEnabled = true
+                    safeSelf.stopActivityIndicator()
+                case .error(_):
+                    safeSelf.handleError()
+                    safeSelf.prepareErrorController()
+                    safeSelf.tableView.alpha = 0.0
+                    safeSelf.tableView.isUserInteractionEnabled = false
+                    safeSelf.stopActivityIndicator()
+                case .completed:
+                    return
+                }
+            })
             .disposed(by: disposeBag)
     }
     
@@ -37,6 +58,21 @@ class DetailsViewController: UIViewController {
         viewModel.recipeDetails = details
         tableView.reloadData()
         tableView.isHidden = false
+    }
+    
+    private func handleError() {
+        errorViewController.reloadHandler = { [weak self] in
+            self?.bindViewModel()
+        }
+        add(errorViewController)
+    }
+    
+    private func prepareErrorController() {
+        errorViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        errorViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        errorViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        errorViewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        errorViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
 }

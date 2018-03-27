@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-typealias RecipiesViewModelType = BaseViewModelProtocol & RecipiesViewModelProtocol & UITableViewDelegate & UITableViewDataSource
+typealias RecipiesViewModelType = RecipiesViewModelProtocol & UITableViewDelegate & UITableViewDataSource
 
 protocol RecipiesViewModelProtocol {
     var recipies: [RecipeGeneral]  { get set }

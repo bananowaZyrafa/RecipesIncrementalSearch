@@ -13,8 +13,8 @@ class RecipiesViewController: UIViewController {
         return UISearchBar()
     }()
     
-    lazy var errorViewController: ErrorViewController = {
-        return ErrorViewController()
+    lazy var errorViewController: RecipiesErrorViewController = {
+        return RecipiesErrorViewController()
     }()
     
     private let disposeBag = DisposeBag()
@@ -52,11 +52,13 @@ class RecipiesViewController: UIViewController {
                     safeSelf.errorViewController.remove()
                     safeSelf.render(recipies: fetchedRecipies)
                     safeSelf.tableView.alpha = 1.0
+                    safeSelf.tableView.isUserInteractionEnabled = true
                     safeSelf.stopActivityIndicator()
                 case .error(_):
                     safeSelf.add(safeSelf.errorViewController)
                     safeSelf.prepareErrorController()
                     safeSelf.tableView.alpha = 0.0
+                    safeSelf.tableView.isUserInteractionEnabled = false
                     safeSelf.stopActivityIndicator()
                 case .completed:
                     return

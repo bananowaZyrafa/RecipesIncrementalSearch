@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class ErrorViewController: UIViewController {
+class RecipiesErrorViewController: UIViewController {
     
     var reloadHandler: () -> Void = {}
     
