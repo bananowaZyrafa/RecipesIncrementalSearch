@@ -16,6 +16,7 @@ class RecipeCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
+        recipeImage.image = nil
         disposeBag = DisposeBag()
     }
     
