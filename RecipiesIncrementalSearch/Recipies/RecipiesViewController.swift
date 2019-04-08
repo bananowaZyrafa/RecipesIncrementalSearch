@@ -2,7 +2,6 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
-import Dwifft
 
 class RecipiesViewController: UIViewController {
     
@@ -30,7 +29,7 @@ class RecipiesViewController: UIViewController {
     func prepareTableView() {
         tableView.delegate = viewModel
         tableView.dataSource = viewModel
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
     }
     
@@ -89,22 +88,9 @@ class RecipiesViewController: UIViewController {
     
     private func render(recipies: [RecipeGeneral]) {
         viewModel.recipies = recipies
-        updateRecipies(currentRecipies: viewModel.recipies, previousRecipies: recipies)
         tableView.reloadData()
     }
     
-    private func updateRecipies(currentRecipies:[RecipeGeneral], previousRecipies: [RecipeGeneral]) {
-        /*let (deletedIndexPaths, insertedIndexPaths) = currentRecipies.diffIndexs(previousRecipies)
-        if #available(iOS 11.0, *) {
-            self.tableView.performBatchUpdates({ () -> Void in
-                self.tableView.deleteItemsAtIndexPaths(deletedIndexPaths)
-                self.tableView.insertItemsAtIndexPaths(insertedIndexPaths)
-            }, completion: nil)
-        } else {
-            return
-        }
-         */
-    }
 }
 
 

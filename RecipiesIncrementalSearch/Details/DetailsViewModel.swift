@@ -58,7 +58,7 @@ extension DetailsViewModel {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         } else if indexPath.section == 2 {
             return 100
         }

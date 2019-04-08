@@ -1,19 +1,21 @@
 PODS:
-  - Dwifft (0.8)
-  - RxCocoa (4.1.2):
-    - RxSwift (~> 4.0)
-  - RxSwift (4.1.2)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.5.0)
 
 DEPENDENCIES:
-  - Dwifft
-  - RxCocoa (~> 4.0)
-  - RxSwift (~> 4.0)
+  - RxCocoa
+  - RxSwift
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - RxCocoa
+    - RxSwift
 
 SPEC CHECKSUMS:
-  Dwifft: 463e61d07322fdf83b32ee6975ca1b20708db746
-  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
-  RxSwift: e49536837d9901277638493ea537394d4b55f570
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
 
-PODFILE CHECKSUM: c1b04a18b813e3b91154ce71b717eb8a5ac9a506
+PODFILE CHECKSUM: 27a6b87b32df3cd3af6627f80a489b29b151ef62
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

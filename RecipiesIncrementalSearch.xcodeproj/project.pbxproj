@@ -37,7 +37,6 @@
 		C6DEF0F6205DEE0A00721DFF /* DetailsHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6DEF0F5205DEE0A00721DFF /* DetailsHeader.xib */; };
 		C6DEF0F8205DF90B00721DFF /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DEF0F7205DF90B00721DFF /* DescriptionCell.swift */; };
 		C6DEF0FA205DFA5700721DFF /* InfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DEF0F9205DFA5700721DFF /* InfoCell.swift */; };
-		C6DEF0FC205E0C8200721DFF /* Array+Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DEF0FB205E0C8200721DFF /* Array+Diff.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +88,6 @@
 		C6DEF0F5205DEE0A00721DFF /* DetailsHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsHeader.xib; sourceTree = "<group>"; };
 		C6DEF0F7205DF90B00721DFF /* DescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
 		C6DEF0F9205DFA5700721DFF /* InfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
-		C6DEF0FB205E0C8200721DFF /* Array+Diff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Diff.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				C64733CD205DB5EA0043DD09 /* UIImage+Extensions.swift */,
-				C6DEF0FB205E0C8200721DFF /* Array+Diff.swift */,
 				C680BEDF206953400063B4F2 /* UIViewController+Child.swift */,
 				C625FC972069750C00F2251C /* UIViewController+ActivityIndicator.swift */,
 			);
@@ -281,7 +278,6 @@
 				C6B4E2D0205D7B390036445F /* Frameworks */,
 				C6B4E2D1205D7B390036445F /* Resources */,
 				4E9BA73F3B617935D6B98760 /* [CP] Embed Pods Frameworks */,
-				66ED2C410FD183F91E4E9BE6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -300,8 +296,6 @@
 				C6B4E2E3205D7B390036445F /* Sources */,
 				C6B4E2E4205D7B390036445F /* Frameworks */,
 				C6B4E2E5205D7B390036445F /* Resources */,
-				A744E6DEE09696C5E73FA596 /* [CP] Embed Pods Frameworks */,
-				ABA2F9AA66BCCFBC5FD2D6B6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -325,10 +319,12 @@
 				TargetAttributes = {
 					C6B4E2D2205D7B390036445F = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					C6B4E2E6205D7B390036445F = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C6B4E2D2205D7B390036445F;
 					};
@@ -400,13 +396,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-RecipiesIncrementalSearch/Pods-RecipiesIncrementalSearch-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Dwifft/Dwifft.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Dwifft.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
@@ -433,51 +427,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		66ED2C410FD183F91E4E9BE6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RecipiesIncrementalSearch/Pods-RecipiesIncrementalSearch-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A744E6DEE09696C5E73FA596 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RecipiesIncrementalSearchTests/Pods-RecipiesIncrementalSearchTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ABA2F9AA66BCCFBC5FD2D6B6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RecipiesIncrementalSearchTests/Pods-RecipiesIncrementalSearchTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -494,7 +443,6 @@
 				C6DEF0FA205DFA5700721DFF /* InfoCell.swift in Sources */,
 				C6B4E2FF205D7E5A0036445F /* RecipiesViewController.swift in Sources */,
 				C64733D3205DDEF50043DD09 /* DetailsCoordinator.swift in Sources */,
-				C6DEF0FC205E0C8200721DFF /* Array+Diff.swift in Sources */,
 				C6B4E301205D7E6C0036445F /* RecipiesViewModel.swift in Sources */,
 				C6B4E314205D89CA0036445F /* RecipeCell.swift in Sources */,
 				C625FC962069640A00F2251C /* RecipiesErrorViewController.swift in Sources */,
@@ -669,7 +617,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RecipiesIncrementalSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -686,7 +634,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RecipiesIncrementalSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -703,7 +651,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RecipiesIncrementalSearchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RecipiesIncrementalSearch.app/RecipiesIncrementalSearch";
 			};
@@ -721,7 +669,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RecipiesIncrementalSearchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RecipiesIncrementalSearch.app/RecipiesIncrementalSearch";
 			};
